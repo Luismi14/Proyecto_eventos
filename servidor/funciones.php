@@ -23,7 +23,7 @@ function logearUsuario($correo, $clave): bool
 
 if (isset($_POST['login_user'])) { // Si se ha enviado el formulario de inicio de sesión
     $correo = $_POST['correo'];
-    $clave = $_POST['clave'];
+    $clave = trim($_POST['clave']); // Aplicar trim() a la contraseña para eliminar espacios en blanco
     $login = logearUsuario($correo, $clave); // Llamar a la función logearUsuario con los parámetros del formulario
 }
 
@@ -38,7 +38,7 @@ if (isset($_POST['registrar_usuario'])) { // Si se ha enviado el formulario de r
     $nombre = $_POST['nombre'];
     $apellido = $_POST['apellido'];
     $correo = $_POST['correo'];
-    $clave = $_POST['clave'];
+    $clave = trim($_POST['clave']); // Aplicar trim() a la contraseña para eliminar espacios en blanco
     $registro = registrarUsuario($nombre, $apellido, $correo, $clave); // Llamar a la función registrarUsuario con los parámetros del formulario
 }
 

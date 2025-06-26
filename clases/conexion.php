@@ -7,11 +7,14 @@
  * @package Conexion
  */
 
-const DB_HOST = 'localhost'; // Dirección del servidor de la base de datos
-const DB_NAME = 'eventos'; // Nombre de la base de datos
-const DB_PORT = '3306'; // Puerto de la base de datos
-const DB_USER = 'root'; // Usuario de la base de datos
-const DB_PASS = ''; // Contraseña de la base de datos
+// --- MODIFICACIONES PARA DOCKER COMPOSE ---
+// La dirección del servidor es el nombre del servicio de la base de datos en docker-compose.yml
+const DB_HOST = 'db'; // Usamos 'db' porque así se llama el servicio en el archivo YAML
+const DB_NAME = 'eventos'; // El nombre de la base de datos que definiste en docker-compose.yml
+const DB_PORT = '3306'; // El puerto estándar de MySQL
+const DB_USER = 'eventos1'; // El usuario que configuraste en docker-compose.yml
+const DB_PASS = 'pass'; // La contraseña que configuraste en docker-compose.yml
+// ------------------------------------------
 
 /**
  * La clase Conexion contiene métodos para conectarse a una base de datos MySQL.

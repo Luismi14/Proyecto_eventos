@@ -97,12 +97,30 @@ function actualizarEvento(PDO $pdo, array $postData): bool
 // Función para agregar un evento
 function agregarEvento(PDO $pdo, array $postData): bool
 {
+    // Validar que los datos POST existan y no estén vacíos.
+    // Esto es una capa extra de seguridad para evitar errores de base de datos.
+    if (
+        empty($postData['nombre']) ||
+        empty($postData['descripcion']) ||
+        empty($postData['lugar']) ||
+        empty($postData['fecha_hora'])
+    ) {
+        // Devuelve false si algún campo está vacío
+        return false;
+    }
+
+    // ** Corrección para el formato de fecha/hora **
+    // Reemplaza la 'T' por un espacio, que es el formato esperado por MySQL/MariaDB
+    $fecha_hora_formateada = str_replace('T', ' ', $postData['fecha_hora']);
+
     // Preparar la sentencia y vincular los parámetros
     $sqlAgregarEvento = $pdo->prepare('INSERT INTO eventos (Nombre_evento, Descripcion_Evento, Lugar, Fecha_Y_Hora) VALUES (:nombre, :descripcion, :lugar, :fecha_hora)');
+    
+    // Vincular los valores a los parámetros
     $sqlAgregarEvento->bindParam(':nombre', $postData['nombre'], PDO::PARAM_STR);
     $sqlAgregarEvento->bindParam(':descripcion', $postData['descripcion'], PDO::PARAM_STR);
     $sqlAgregarEvento->bindParam(':lugar', $postData['lugar'], PDO::PARAM_STR);
-    $sqlAgregarEvento->bindParam(':fecha_hora', $postData['fecha_hora'], PDO::PARAM_STR);
+    $sqlAgregarEvento->bindParam(':fecha_hora', $fecha_hora_formateada, PDO::PARAM_STR);
 
     // Ejecutar la sentencia y retornar el resultado
     return $sqlAgregarEvento->execute();

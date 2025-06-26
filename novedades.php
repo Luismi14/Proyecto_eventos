@@ -1,5 +1,10 @@
 <?php
 require_once 'servidor/funciones.php'; // Archivo que contiene las funciones del usuario
+
+// ** CÓDIGO CORREGIDO: Inicializar la variable $lista_eventos antes de usarla. **
+// Esto asegura que la variable siempre exista, evitando el aviso de "Undefined variable".
+$lista_eventos = [];
+
 require_once 'servidor/eventos.php'; // Archivo que contiene las funciones para los eventos
 
 $logeado = verificarLogin();
@@ -91,8 +96,7 @@ if (!$logeado && empty($_SESSION['logout_message'])) {
                         </div>
                     </section>
                     <section>
-                    <!-- Modal de registro de evento -->
-                        <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -123,7 +127,6 @@ if (!$logeado && empty($_SESSION['logout_message'])) {
                                 </div>
                             </div>
                         </div>
-                        <!-- Modal de edición de evento -->
                         <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -156,7 +159,6 @@ if (!$logeado && empty($_SESSION['logout_message'])) {
                                 </div>
                             </div>
                         </div>
-                        <!-- Modal de éxito -->
                         <div class='modal fade' id='successModal' tabindex='-1' role='dialog' aria-labelledby='successModalLabel'
                             aria-hidden='true'>
                             <div class='modal-dialog modal-dialog-centered'>
@@ -175,7 +177,6 @@ if (!$logeado && empty($_SESSION['logout_message'])) {
                                 </div>
                             </div>
                         </div>
-                        <!-- Modal de error -->
                         <div class='modal fade' id='errorModal' tabindex='-1' role='dialog' aria-labelledby='errorModalLabel'
                             aria-hidden='true'>
                             <div class='modal-dialog modal-dialog-centered'>
@@ -195,7 +196,6 @@ if (!$logeado && empty($_SESSION['logout_message'])) {
                                 </div>
                             </div>
                         </div>
-                        <!-- Modal de confirmación -->
                         <div class='modal fade' id='confirmModal' tabindex='-1' role='dialog' aria-labelledby='confirmModalLabel'
                             aria-hidden='true'>
                             <div class='modal-dialog modal-dialog-centered'>
@@ -214,7 +214,6 @@ if (!$logeado && empty($_SESSION['logout_message'])) {
                                 </div>
                             </div>
                         </div>
-                        <!-- Modal de actualización -->
                         <div class='modal fade' id='updatedModal' tabindex='-1' role='dialog' aria-labelledby='updatedModalLabel'
                             aria-hidden='true'>
                             <div class='modal-dialog modal-dialog-centered'>
@@ -232,7 +231,6 @@ if (!$logeado && empty($_SESSION['logout_message'])) {
                                 </div>
                             </div>
                         </div>
-                        <!-- Modal de eliminación -->
                         <div class='modal fade' id='deleteModal' tabindex='-1' role='dialog' aria-labelledby='errorModalLabel'
                             aria-hidden='true'>
                             <div class='modal-dialog modal-dialog-centered'>

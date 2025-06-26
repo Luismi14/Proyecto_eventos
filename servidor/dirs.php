@@ -1,9 +1,16 @@
 <?php
-define("ROOT_PATH", $_SERVER['DOCUMENT_ROOT'] . '/eventos/');
-const CLASS_PATH = ROOT_PATH . 'clases/';
-const SERVER_PATH = ROOT_PATH . 'servidor/';
-const TEMPLATES_PATH = ROOT_PATH . 'templates/';
-const ASSETS_PATH = ROOT_PATH . 'assets/';
-const VENDOR_PATH = ROOT_PATH . 'vendor/';
+// En /servidor/dirs.php
 
+// Define la ruta a la carpeta 'clases'.
+// '__DIR__' obtiene el directorio del archivo actual (servidor/),
+// y '../' sube un nivel para llegar a la raíz del proyecto,
+// luego añade 'clases/'.
+define('CLASS_PATH', __DIR__ . '/../clases/');
+
+// Define la ruta a la carpeta 'servidor'.
+// '__DIR__' es el directorio actual (servidor/).
+define('SERVER_PATH', __DIR__ . '/');
+
+// Puedes añadir otras rutas si las tienes
+// define('TEMPLATES_PATH', __DIR__ . '/../templates/');
 ?>

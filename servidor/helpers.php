@@ -28,15 +28,15 @@ function obtenerConexionYAuth(): array
 /**
  * Función para registrar las Excepciones en el archivo de log
  */
-
 function logPDOException($e, $message): void
 {
     // Obtener la fecha y hora actual en la zona horaria deseada
     $currentDateTime = date('d-m-Y H:i:s', strtotime('now -7 hours'));
     // Crear el mensaje de registro
     $logMessage = "[$currentDateTime] $message " . $e->getMessage() . PHP_EOL . $e . PHP_EOL;
-    // Registrar el mensaje en el archivo de log
-    error_log($logMessage, 3, 'logs/error.log');
+    
+    // ** RUTA CORREGIDA: Usamos __DIR__ para una ruta absoluta y subir un directorio **
+    error_log($logMessage, 3, __DIR__ . '/../logs/error.log');
 }
 
 function logException($e, $message): void
@@ -45,6 +45,7 @@ function logException($e, $message): void
     $currentDateTime = date('d-m-Y H:i:s', strtotime('now -7 hours'));
     // Crear el mensaje de registro
     $logMessage = "[$currentDateTime] $message " . $e->getMessage() . PHP_EOL . $e . PHP_EOL;
-    // Registrar el mensaje en el archivo de log
-    error_log($logMessage, 3, 'logs/error.log');
+
+    // ** RUTA CORREGIDA: Usamos __DIR__ para una ruta absoluta y subir un directorio **
+    error_log($logMessage, 3, __DIR__ . '/../logs/error.log');
 }
