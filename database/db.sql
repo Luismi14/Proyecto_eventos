@@ -13,7 +13,6 @@
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
         -- Disparador para generar el ID_Usuario con el formato 'COD-XXXXX'
-        DELIMITER $$
         CREATE TRIGGER generar_id_usuario_trigger
         BEFORE INSERT
         ON usuarios
@@ -30,8 +29,7 @@
           END IF;
 
           SET NEW.ID_Usuario = CONCAT('COD-', LPAD(next_val, 5, '0'));
-        END;$$
-        DELIMITER ;
+        END;
 
         -- Otras tablas de tu base de datos (ejemplo, asegúrate de mantener tus tablas originales)
         CREATE TABLE IF NOT EXISTS `eventos_eliminados` (
