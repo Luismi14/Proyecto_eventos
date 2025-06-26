@@ -26,10 +26,10 @@ services:
       MYSQL_PASSWORD: pass # Contraseña para el usuario de la aplicación (para la app PHP)
     volumes:
       - db_data:/var/lib/mysql
-      # Mapea el archivo de esquema principal (tablas)
+      # Mapea el script principal de la base de datos (tablas)
       - ./database/db.sql:/docker-entrypoint-initdb.d/10-schema.sql
-      # Mapea el archivo de triggers (se ejecutará después del esquema)
-      - ./database/triggers.sql:/docker-entrypoint-initdb.d/20-triggers.sql # <--- NUEVA LÍNEA AQUÍ
+      # Mapea el script de triggers (se ejecuta después del esquema)
+      - ./database/triggers.sql:/docker-entrypoint-initdb.d/20-triggers.sql
     restart: always
 
   # Servicio para phpMyAdmin
