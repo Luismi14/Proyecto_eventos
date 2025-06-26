@@ -1,45 +1,49 @@
+version: '3.8'
 
-    services:
-      # Servicio para la aplicación web (PHP + Apache)
-      web:
-        build:
-          context: .
-          dockerfile: Dockerfile
-        container_name: eventos_web
-        ports:
-          - "8000:80"
-        volumes:
-          - .:/var/www/html
-        depends_on:
-          - db
-        restart: always
-
-      # Servicio para la base de datos MySQL
-      db:
-        image: mysql:8.0
-        container_name: eventos_db
-        environment:
-          MYSQL_ROOT_PASSWORD: root # <--- Contraseña de root de MySQL (para phpMyAdmin)
-          MYSQL_DATABASE: eventos # Nombre de la base de datos para la aplicación
-          MYSQL_USER: eventos1 # Usuario para la base de datos de la aplicación (para la app PHP)
-          MYSQL_PASSWORD: pass # Contraseña para el usuario de la aplicación (para la app PHP)
-        volumes:
-          - db_data:/var/lib/mysql
-          - ./database/db.sql:/docker-entrypoint-initdb.d/db.sql
-        restart: always
-
-      # Servicio para phpMyAdmin
-      phpmyadmin:
-        image: phpmyadmin/phpmyadmin
-        container_name: eventos_phpmyadmin
-        ports:
-          - "8080:80"
-        environment:
-          PMA_HOST: db
-          MYSQL_ROOT_PASSWORD: root # <--- Debe coincidir con la de 'db'
-        depends_on:
-          - db
-        restart: always
-
+services:
+  # Servicio para la aplicación web (PHP + Apache)
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: eventos_web
+    ports:
+      - "8000:80"
     volumes:
-      db_data:
+      - .:/var/www/html
+    depends_on:
+      - db
+    restart: always
+
+  # Servicio para la base de datos MySQL
+  db:
+    image: mysql:8.0
+    container_name: eventos_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root # <--- Contraseña de root de MySQL (para phpMyAdmin)
+      MYSQL_DATABASE: eventos # Nombre de la base de datos para la aplicación
+      MYSQL_USER: eventos1 # Usuario para la base de datos de la aplicación (para la app PHP)
+      MYSQL_PASSWORD: pass # Contraseña para el usuario de la aplicación (para la app PHP)
+    volumes:
+      - db_data:/var/lib/mysql
+      # Mapea el archivo de esquema principal (tablas)
+      - ./database/db.sql:/docker-entrypoint-initdb.d/10-schema.sql
+      # Mapea el archivo de triggers (se ejecutará después del esquema)
+      - ./database/triggers.sql:/docker-entrypoint-initdb.d/20-triggers.sql # <--- NUEVA LÍNEA AQUÍ
+    restart: always
+
+  # Servicio para phpMyAdmin
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: eventos_phpmyadmin
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: root # <--- Debe coincidir con la de 'db'
+    depends_on:
+      - db
+    restart: always
+
+volumes:
+  db_data:
