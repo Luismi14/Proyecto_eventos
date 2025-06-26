@@ -26,10 +26,12 @@ services:
       MYSQL_PASSWORD: pass
     volumes:
       - db_data:/var/lib/mysql
-      # Mapea el script principal de la base de datos (tablas)
+      # 1. Mapea el script de creación de tablas. Se ejecuta primero.
       - ./database/db.sql:/docker-entrypoint-initdb.d/10-schema.sql
-      # Mapea el script de triggers (se ejecuta después del esquema)
-      - ./database/triggers.sql:/docker-entrypoint-initdb.d/20-triggers.sql
+      # 2. Mapea el script de shell que creará el trigger de forma robusta.
+      - ./database/init-triggers.sh:/docker-entrypoint-initdb.d/20-init-triggers.sh
+      # 3. Mapea el archivo del trigger a una ubicación donde el script de shell pueda encontrarlo.
+      - ./database/triggers.sql:/tmp/triggers.sql
     restart: always
 
   # Servicio para phpMyAdmin
