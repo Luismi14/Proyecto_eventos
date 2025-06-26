@@ -1,5 +1,8 @@
--- Este script contiene solo el TRIGGER y se ejecutará después de las tablas.
+-- Este script crea el disparador.
 USE eventos;
+
+-- Cambia el delimitador para permitir que el bloque BEGIN...END sea una sola sentencia
+DELIMITER $$
 
 CREATE TRIGGER generar_id_usuario_trigger
 BEFORE INSERT
@@ -17,4 +20,7 @@ BEGIN
   END IF;
 
   SET NEW.ID_Usuario = CONCAT('COD-', LPAD(next_val, 5, '0'));
-END;
+END$$
+
+-- Vuelve a establecer el delimitador a punto y coma
+DELIMITER ;
