@@ -1,3 +1,10 @@
+##### Direccion de html ADSO
+http://localhost:8000/inicio.php
+
+#### Direccion de pypmyadmin
+http://localhost:8080/index.php?route=/
+
+
 ## Descripción del proyecto
 
 Este proyecto es una aplicación web basada en PHP y MySQL para la gestión de eventos. El proyecto permite a los usuarios crear, ver, actualizar y eliminar eventos, así como buscar eventos según varios criterios. La aplicación está diseñada para ser fácil de usar y personalizable, con una interfaz amigable para el usuario y una variedad de características para satisfacer las necesidades de diferentes usuarios.
