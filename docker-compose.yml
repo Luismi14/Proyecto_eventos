@@ -20,16 +20,15 @@ services:
     image: mysql:8.0
     container_name: eventos_db
     environment:
-      MYSQL_ROOT_PASSWORD: root # <--- Contraseña de root de MySQL (para phpMyAdmin)
-      MYSQL_DATABASE: eventos # Nombre de la base de datos para la aplicación
-      MYSQL_USER: eventos1 # Usuario para la base de datos de la aplicación (para la app PHP)
-      MYSQL_PASSWORD: pass # Contraseña para el usuario de la aplicación (para la app PHP)
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: eventos
+      MYSQL_USER: eventos1
+      MYSQL_PASSWORD: pass
     volumes:
       - db_data:/var/lib/mysql
-      # Mapea el script principal de la base de datos (tablas)
+      # Mapea solo el script principal de la base de datos (tablas)
       - ./database/db.sql:/docker-entrypoint-initdb.d/10-schema.sql
-      # Mapea el script de triggers (se ejecuta después del esquema)
-      - ./database/triggers.sql:/docker-entrypoint-initdb.d/20-triggers.sql
+      # ELIMINA ESTA LÍNEA: - ./database/triggers.sql:/docker-entrypoint-initdb.d/20-triggers.sql
     restart: always
 
   # Servicio para phpMyAdmin
@@ -40,7 +39,7 @@ services:
       - "8080:80"
     environment:
       PMA_HOST: db
-      MYSQL_ROOT_PASSWORD: root # <--- Debe coincidir con la de 'db'
+      MYSQL_ROOT_PASSWORD: root
     depends_on:
       - db
     restart: always
